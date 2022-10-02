@@ -23,4 +23,23 @@ app.get("/users", async (request, response) => {
   }
 });
 
+const auth = require("./auth");
+const SpotifyWebApi = require("spotify-web-api-node");
+
+const spotifyApi = new SpotifyWebApi({
+  clientId: process.env.SPOTIFY_API_ID,
+  clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+  redirectUri: process.env.CALLBACK_URI,
+});
+
+router.get("/spotifyLogin", (req, res) => {
+  console.log("here");
+  auth.spotifyLogin(req, res, spotifyApi);
+});
+
+router.get("/yo", (req, res) => {
+  console.log("");
+  res.send(JSON.stringify("hello"));
+});
+
 module.exports = app;
